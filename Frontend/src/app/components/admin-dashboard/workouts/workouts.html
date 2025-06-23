@@ -1,0 +1,43 @@
+<app-adminnav></app-adminnav>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Workouts List</h1>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <button class="btn btn-success">Add New Workout</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Workout Name</th>
+                    <th>Description</th>
+                    <th>Workout Plan</th>
+                    <th colspan="2" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr *ngFor="let workout of workouts">
+                    <td>{{ workout.workoutId }}</td>
+                    <td>{{ workout.workoutName }}</td>
+                    <td>{{ workout.description }}</td>
+                    <td>{{ workout.workoutPlan?.planName }}</td> <td>
+                        <button class="btn btn-sm btn-primary" (click)="editWorkout(workout.workoutId)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="deleteWorkout(workout.workoutId)">Delete</button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+<app-usernav></app-usernav>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Member Profile</h3>
+            <button class="btn btn-outline-light btn-sm" (click)="toggleEditMode()">
+                <i class="fas fa-edit me-2" *ngIf="!isEditing"></i>
+                <i class="fas fa-eye me-2" *ngIf="isEditing"></i>
+                {{ isEditing ? 'View Profile' : 'Edit Profile' }}
+            </button>
+        </div>
+        <div class="card-body">
+
+            <div *ngIf="!isEditing">
+                <h4 class="mb-4 text-primary">{{ member.user.completeName }}</h4>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Member ID:</strong> {{ member.memberId }}</div>
+                    <div class="col-md-6"><strong>GOVT ID Number :</strong> {{ member.govtidNumber }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Joining Date:</strong> {{ member.joiningDate || 'N/A' }}</div>
+                    <div class="col-md-6"><strong>End of Membership:</strong> {{ member.endOfMembershipDate || 'N/A' }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Contact:</strong> {{ member.user.contact }}</div>
+                    <div class="col-md-6"><strong>Email:</strong> {{ member.user.email }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12"><strong>Address:</strong> {{ member.address || 'N/A' }}</div>
+                </div>
+                <hr>
+                <h5 class="mb-3 text-secondary">Membership Details</h5>
+                <div class="row mb-3">
+                    <div class="col-md-6"><strong>Membership ID (External):</strong> {{ member.membershipId || 'N/A' }}</div>
+                    <div class="col-md-6"><strong>Plan Name:</strong> {{ member.membershipType.name}}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12"><strong>Associated User:</strong> {{ member.user.username }} (ID: {{ member.user.userId || 'N/A' }})</div>
+                </div>
+            </div>
+
+            <div *ngIf="isEditing">
+                <form (ngSubmit)="saveProfile()">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" [(ngModel)]="member.user.completeName" name="name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="idNumber" class="form-label">GOVT ID Number</label>
+                            <input type="text" class="form-control" id="idNumber" [(ngModel)]="member.govtidNumber" name="idNumber">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="joiningDate" class="form-label">Joining Date</label>
+                            <input type="date" class="form-control" id="joiningDate" [(ngModel)]="member.joiningDate" name="joiningDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="endOfMembershipDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="endOfMembershipDate" [(ngModel)]="member.endOfMembershipDate" name="endOfMembershipDate">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="contact" class="form-label">Contact</label>
+                            <input type="tel" class="form-control" id="contact" [(ngModel)]="member.user.contact" name="contact">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" [(ngModel)]="member.user.email" name="email">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea class="form-control" id="address" [(ngModel)]="member.user.address" name="address" rows="3"></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-save me-2"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-lg" (click)="toggleEditMode()">
+                            <i class="fas fa-times me-2"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

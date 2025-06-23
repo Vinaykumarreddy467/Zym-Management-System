@@ -1,0 +1,50 @@
+.register-page {
+  height: 100vh;
+  background: linear-gradient(to right, #141e30, #243b55);
+  padding: 20px;
+}
+
+.register-box {
+  background: #fff;
+  width: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.brand-text {
+  font-size: 20px;
+  color: #333;
+}
+
+.form-title {
+  font-weight: 600;
+  font-size: 24px;
+  color: #1f1f1f;
+}
+
+.custom-input {
+  background-color: #f2f3f7;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #6a11cb;
+  background-color: #fff;
+}
+
+.gradient-btn {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  border: none;
+  padding: 10px 0;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.gradient-btn:hover {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+}

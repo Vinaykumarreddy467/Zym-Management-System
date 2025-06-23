@@ -1,0 +1,62 @@
+<app-welcomenav></app-welcomenav>
+<div class="register-page d-flex align-items-center justify-content-center">
+  <div class="register-box shadow-lg rounded">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center p-3">
+      <div class="logo">
+        <strong class="brand-text">Fitdeck</strong>
+      </div>
+      <i class="bi bi-person-circle fs-4 text-secondary"></i>
+    </div>
+
+    <!-- Title -->
+    <div class="text-center">
+      <h3 class="mb-3 form-title">Registration</h3>
+    </div>
+
+    <!-- Form -->
+    <form #registrationForm="ngForm" (ngSubmit)="onSubmit()" class="p-4">
+
+      <div class="form-group mb-3">
+        <input type="text" class="form-control custom-input" placeholder="Complete Name" name="completeName" [(ngModel)]="user.completeName" required>
+      </div>
+
+      <div class="form-group mb-3">
+        <select class="form-control custom-input" name="role" [(ngModel)]="user.role" required>
+          <option value="" disabled selected>Select Role</option>
+          <option value="user">User</option>
+          <option value="instructor">Instructor</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+
+      <div class="form-group mb-3">
+        <input type="text" class="form-control custom-input" placeholder="Username" name="username" [(ngModel)]="user.username" required>
+      </div>
+
+      <div class="form-group mb-3">
+        <input type="password" class="form-control custom-input" placeholder="Password" name="password" [(ngModel)]="user.password" required minlength="6">
+      </div>
+
+      <div class="form-group mb-3">
+        <input type="text" class="form-control custom-input" placeholder="Contact" name="contact" [(ngModel)]="user.contact">
+      </div>
+
+      <div class="form-group mb-4">
+        <textarea class="form-control custom-input" placeholder="Address" name="address" [(ngModel)]="user.address" rows="2"></textarea>
+      </div>
+
+      <!-- Gradient Submit Button -->
+      <button type="submit" class="btn gradient-btn w-100 text-white fw-semibold">
+        Create Account
+      </button>
+    </form>
+
+    <!-- Footer -->
+    <div class="text-center pb-3 fw-bold">
+      Already a user? <a routerLink="/login" class="text-primary">Login</a>
+    </div>
+  </div>
+</div>

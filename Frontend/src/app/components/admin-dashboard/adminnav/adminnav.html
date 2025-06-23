@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+  <div class="container-fluid">
+    <!-- Logo/Brand -->
+    <a class="navbar-brand fw-bold fs-4" >FIT DECK</a>
+
+    <!-- Toggler/collapsible Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+      aria-controls="navbarContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li>admin dashboard</li>
+        <li class="nav-item">
+          <a class="nav-link" >Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allusers"> users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allmembers" > Members</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allinstructors" > Instructors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allworkouts"> Workouts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allworkoutplans" >Workout Plans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="/allmembershiptypes" >MembershipTypes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allpromotionalmaterials"> PromotionalMaterial</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allzyms" >Zyms</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/allpayments" >payments</a>
+        </li>
+      </ul>
+
+      <!-- User Info and Logout -->
+      <div class="d-flex align-items-center text-white">
+        <span class="me-3">
+          <i class="bi bi-person-circle me-1"></i>
+          <strong>{{ user.username }}</strong>
+        </span>
+        <button class="btn btn-outline-light btn-sm" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>

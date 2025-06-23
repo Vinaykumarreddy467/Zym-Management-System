@@ -1,0 +1,72 @@
+<app-adminnav></app-adminnav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Promotional Materials List</h1>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <button class="btn btn-success" (click)="addNewPromotion()" *ngIf="isShowing">Add New Promotional Material</button>
+        </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="isShowing">
+        <table class="table table-striped table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>File</th>
+                    <th>Uploaded By User</th>
+                    <th colspan="2" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let material of promotionalMaterialsList">
+                    <td>{{ material.promotionId }}</td>
+                    <td>{{ material.name }}</td>
+                    <td><a [href]="material.fileUpload" target="_blank">{{ material.fileUpload ? 'View File' : 'N/A' }}</a></td>
+                    <td>{{ material.user?.username }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="editPromotion(material.promotionId)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="deletePromotion(material.promotionId)">Delete</button>
+                    </td>
+                </tr>
+                <tr *ngIf="!PromoMaterialModel || promotionalMaterialsList.length === 0">
+                    <td colspan="6" class="text-center text-muted py-4">No promotional materials found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-5" *ngIf="isAdding || (isEditing && selectedPromotionID)">
+
+    <div *ngIf="isAdding || (isEditing && selectedPromotionID)" class="card mt-4 p-4 shadow-sm">
+        <h2 class="card-title mb-4">
+            {{ isAdding ? 'Add New Promotional Material' : 'Edit Promotional Material: ' + selectedPromotionID }}
+        </h2>
+        <form (ngSubmit)="savePromotion()">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="materialName" class="form-label">Material Name</label>
+                    <input type="text" class="form-control" id="materialName" [(ngModel)]="PromoMaterialModel.name" name="name" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="fileUrl" class="form-label">File URL / Path</label>
+                    <input type="text" class="form-control" id="fileUrl" [(ngModel)]="PromoMaterialModel.fileUpload" name="fileUpload" placeholder="e.g., http://example.com/promo.pdf or /uploads/promo.jpg">
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-success me-2">Save Promotional Material</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

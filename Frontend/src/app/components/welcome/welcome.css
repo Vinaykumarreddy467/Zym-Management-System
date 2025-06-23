@@ -1,0 +1,94 @@
+ .welcome{
+            font-family: 'Inter', sans-serif;
+            /* Background Image for Gym Theme */
+            background-image: url('https://hips.hearstapps.com/hmg-prod/images/killing-that-kettlebell-workout-royalty-free-image-637772778-1562688657.jpg'); /* Updated background image URL */
+            background-size: cover; /* Cover the entire page */
+            background-position: left center; /* Position the image to the left, vertically centered */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-attachment: fixed; /* Keep background fixed while scrolling (if content overflows) */
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            display: flex;
+            align-items: center; /* Vertically center content */
+            justify-content: center; /* Horizontally center content */
+            margin: 0;
+            padding: 20px; /* Add some padding around the content */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        .welcome-container {
+            background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Deeper shadow for depth */
+            max-width: 500px; /* Max width for the container */
+            width: 100%; /* Full width up to max-width */
+            text-align: center;
+        }
+
+        .welcome-container h1 {
+            font-size: 2.8rem; /* Larger heading */
+            font-weight: 800; /* Extra bold */
+            color: #212529; /* Darker text for contrast */
+            margin-bottom: 15px;
+        }
+
+        .welcome-container .lead {
+            font-size: 1.3rem; /* Larger lead text */
+            color: #495057;
+            margin-bottom: 25px;
+        }
+
+        .welcome-container p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .btn-custom-login {
+            background-color: #6f42c1; /* Bootstrap's purple */
+            border-color: #6f42c1;
+            color: white;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 8px; /* Slightly more rounded */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%; /* Full width button */
+        }
+
+        .btn-custom-login:hover {
+            background-color: #5935a6; /* Darker purple on hover */
+            border-color: #5935a6;
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        .btn-custom-register {
+            background-color: #28a745; /* Bootstrap's green */
+            border-color: #28a745;
+            color: white;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%; /* Full width button */
+        }
+
+        .btn-custom-register:hover {
+            background-color: #218838; 
+            border-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .link-text {
+            color: #007bff; 
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .link-text:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .text-center {
+            text-align: center;
+        }

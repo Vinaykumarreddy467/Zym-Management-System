@@ -1,0 +1,36 @@
+<app-welcomenav></app-welcomenav>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Choose Your Membership</h2>
+    <p class="lead text-center mb-5">Select the perfect plan that fits your fitness goals and budget.</p>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col" *ngFor="let membership of membershiptypes; let i = index">
+            <div class="card h-100 shadow-sm border" > <div class="card-header py-3" [ngClass]="{'text-bg-primary border-primary': i === 1}">
+                    <h4 class="my-0 fw-normal">{{ membership.name || 'Membership Plan' }}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">
+                        ₹{{ membership.membershipAmount || '0' }}<small class="text-muted fw-light">/{{ membership.duration || 'month' }}</small>
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li *ngFor="let feature of membership.features">
+                            <i class="fas fa-check-circle text-success me-2"></i> {{ feature }}
+                        </li>
+                        <ng-container *ngIf="!membership.features || membership.features.length === 0">
+                            <li>Basic Gym Access and Membership </li>
+                            <li>{{ membership.duration || 'month' }}</li>
+                        </ng-container>
+                    </ul>
+                    <button type="button" class="w-100 btn btn-lg"
+                            [ngClass]="{'btn-primary': i === 1, 'btn-outline-primary': i !== 1}">
+                        {{ i === 1 ? 'Get Started' : 'Select Plan' }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 text-center" *ngIf="!membershiptypes || membershiptypes.length === 0">
+            <p>No membership plans available at the moment. Please check back later!</p>
+        </div>
+    </div>
+</div>

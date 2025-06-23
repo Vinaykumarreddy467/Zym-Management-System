@@ -1,0 +1,23 @@
+.login-page {
+  height: 100vh;
+  background: linear-gradient(145deg, #141e30, #243b55);
+}
+
+.login-box {
+  background-color: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.gradient-btn {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  border: none;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.custom-input {
+  border-radius: 10px;
+  padding: 10px;
+}

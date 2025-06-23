@@ -1,0 +1,88 @@
+<app-adminnav></app-adminnav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Payments List</h1>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <button class="btn btn-success" (click)="recordNewPayment()" *ngIf="isShowing">Record New Payment</button>
+        </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="isShowing">
+        <table class="table table-striped table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Amount</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                    <th>Recorded By User</th>
+                    <th>Member Name</th>
+                    <th colspan="2" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let payment of payments">
+                    <td>{{ payment.paymentId }}</td>
+                    <td>{{ payment.amount | currency:'INR' }}</td>
+                    <td>{{ payment.time }}</td>
+                    <td>{{ payment.date }}</td>
+                    <td>{{ payment.user.completeName }}</td>
+                    <td>{{ payment.member.zymname}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" (click)="editPayment(payment.paymentId)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="deletePayment(payment.paymentId)">Delete</button>
+                    </td>
+                </tr>
+                <tr *ngIf="!payments || payments.length === 0">
+                    <td colspan="8" class="text-center text-muted py-4">No payments found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-5" *ngIf="isAdding || (isEditing && selectedPaymentID)">
+
+    <div *ngIf="isAdding || (isEditing && selectedPaymentID)" class="card mt-4 p-4 shadow-sm">
+        <h2 class="card-title mb-4">
+            {{ isAdding ? 'Record New Payment' : 'Edit Payment: ' + selectedPaymentID }}
+        </h2>
+        <form (ngSubmit)="savePayment()">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="amount" class="form-label">Amount (INR)</label>
+                    <input type="number" class="form-control" id="amount" [(ngModel)]="Payment.amount" name="amount" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="date" [(ngModel)]="Payment.date" name="date" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="time" class="form-label">Time</label>
+                    <input type="time" class="form-control" id="time" [(ngModel)]="Payment.time" name="time">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="member" class="form-label">Member</label>
+                    <select class="form-select" id="member" [(ngModel)]="Payment.memberId" name="member" required>
+                        <option [ngValue]="null" disabled>Select a Member</option>
+                        <option *ngFor="let member of members" [ngValue]="member.memberId">{{ member.zymname }}</option>
+                    </select>
+                    <small *ngIf="members.length === 0 && (isAdding || isEditing)" class="text-muted">No members available. Please add members first.</small>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-success me-2">Save Payment</button>
+                <button type="button" class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

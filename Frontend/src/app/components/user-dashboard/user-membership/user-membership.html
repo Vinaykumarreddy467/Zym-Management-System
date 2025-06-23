@@ -1,0 +1,44 @@
+<app-usernav></app-usernav>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">My Membership Plan</h2>
+
+    <div *ngIf="membershipPlanExists; else noPlans">
+        <p class="lead text-center mb-5">Here are your active  membership plans:</p>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <div class="col" *ngFor="let membership of membershiptypes; let i = index">
+                <div class="card h-100 shadow-sm border" [ngClass]="{'border-primary shadow-lg': i === 0}">
+                    <div class="card-header py-3" [ngClass]="{'text-bg-primary border-primary': i === 0}">
+                        <h4 class="my-0 fw-normal">{{ membership.name || 'Your Plan Name' }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">
+                            ₹{{ membership.membershipAmount || '0' }}
+                            <small class="text-muted fw-light">/{{ membership.membershipPeriod || 'month' }}</small>
+                        </h1>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li *ngIf="membership.memberShipFee">Membership Fee: ₹{{ membership.memberShipFee }}</li>
+                            <li *ngIf="membership.user">Assigned to User: {{ membership.user.name || 'N/A' }}</li>
+                            <li>Plan ID: {{ membership.typeId }}</li>
+                            </ul>
+                        <button type="button" class="w-100 btn btn-lg btn-outline-secondary">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noPlans>
+        <div class="alert alert-info text-center mt-5" role="alert">
+            <h4 class="alert-heading">No Active Plans Found!</h4>
+            <p>It seems you don't have any active membership plans with us at the moment.</p>
+            <hr>
+            <p class="mb-0">Explore our <a routerLink="/memberships" class="alert-link">Membership Types</a> to find a plan that suits you!</p>
+        </div>
+    </ng-template>
+
+    <div *ngIf="!membershipPlanExists" class="text-center mt-4">
+        <h3>Looking for a plan?</h3>
+        <button class="btn btn-success btn-lg" routerLink="/allusermembershiptypes">Browse All Membership Types</button>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<app-adminnav></app-adminnav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Workout Plans List</h1>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <button class="btn btn-success">Add New Workout Plan</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Workout Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Member Name</th>
+                    <th>Instructor Name</th>
+                    <th colspan="2" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let workoutPlan of workoutPlans">
+                    <td>{{ workoutPlan.planId }}</td>
+                    <td>{{ workoutPlan.workOutname }}</td>
+                    <td>{{ workoutPlan.workoutDate }}</td>
+                    <td>{{ workoutPlan.workoutTime }}</td>
+                    <td>{{ workoutPlan.member?.name }}</td>         <td>{{ workoutPlan.instructor?.name }}</td>     <td>
+                        <button class="btn btn-sm btn-primary" (click)="editWorkoutPlan(workoutPlan.planId)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="deleteWorkoutPlan(workoutPlan.planId)">Delete</button>
+                    </td>
+                </tr>
+                <tr *ngIf="!workoutPlans || workoutPlans.length === 0">
+                    <td colspan="8" class="text-center text-muted py-4">No workout plans found.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

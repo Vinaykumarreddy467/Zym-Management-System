@@ -1,0 +1,59 @@
+<app-welcomenav></app-welcomenav>
+<div class="login-page d-flex align-items-center justify-content-center">
+  <div class="login-box shadow-lg rounded">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center p-3">
+      <div class="logo">
+        <strong>FIT-DECK</strong>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="text-center">
+      <h3 class="mb-3">Login <i class="bi bi-chevron-down"></i></h3>
+    </div>
+
+    <!-- Login Form -->
+    <form #registrationForm="ngForm" (ngSubmit)="onSubmit()" class="p-4">
+      
+      <!-- Username -->
+      <div class="form-group mb-3">
+        <input type="text"
+               class="form-control custom-input"
+               placeholder="Username"
+               name="username"
+               [(ngModel)]="user.username"
+               required>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group mb-4">
+        <input type="password"
+               class="form-control custom-input"
+               placeholder="Password"
+               name="password"
+               [(ngModel)]="user.password"
+               required
+               minlength="6">
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn gradient-btn w-100 text-white mb-2">
+        Login
+      </button>
+
+      <!-- Reset -->
+      <button type="reset" class="btn btn-outline-secondary w-100 mb-3">
+        Reset
+      </button>
+
+      <!-- Register Link -->
+      <div class="text-center fw-bold">
+        Don't have an account?
+        <a routerLink="/register" class="text-primary text-decoration-none">Register</a>
+      </div>
+      
+    </form>
+  </div>
+</div>

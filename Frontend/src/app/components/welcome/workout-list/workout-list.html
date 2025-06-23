@@ -1,0 +1,21 @@
+<app-welcomenav></app-welcomenav>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Our Workout Plans</h2>
+    <p class="lead text-center mb-5">Explore a variety of workout routines to help you achieve your fitness goals.</p>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col" *ngFor="let workout of workouts">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ workout.workoutName }}</h5>
+                    <p class="card-text text-muted">{{ workout.description }}</p>
+                    <button class="btn btn-sm btn-outline-secondary mt-3">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 text-center" *ngIf="!workouts || workouts.length === 0">
+            <p>No workout plans available at the moment. Please check back later!</p>
+        </div>
+    </div>
+</div>
