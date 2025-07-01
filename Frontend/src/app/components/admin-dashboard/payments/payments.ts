@@ -26,7 +26,7 @@ export class Payments implements OnInit {
   constructor(
     private paymentService: PaymentService,
     private memberService: MemberService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getallpayments();
@@ -75,11 +75,9 @@ export class Payments implements OnInit {
     this.paymentService.getPaymentById(paymentId).subscribe(
       (response: any) => {
         this.Payment = response;
-        if (this.Payment.member && typeof this.Payment.member.memberId === 'number') {
-            this.Payment.memberId = this.Payment.member.memberId;
-        } 
+
         if (this.Payment.date) {
-            this.Payment.date = new Date(this.Payment.date).toISOString().split('T')[0];
+          this.Payment.date = new Date(this.Payment.date).toISOString().split('T')[0];
         }
       },
       (error: any) => {
@@ -90,8 +88,10 @@ export class Payments implements OnInit {
   }
 
   savePayment(): void {
+    // Detach unsaved member if necessary
+
     if (this.isAdding) {
-      this.paymentService.processPayment(this.Payment).subscribe(
+      this.paymentService.processPayment(this.Payment, this.Payment.user.userId).subscribe(
         (response: any) => {
           console.log("Payment recorded successfully:", response);
           this.getallpayments();
@@ -134,6 +134,6 @@ export class Payments implements OnInit {
     this.isEditing = false;
     this.isShowing = true;
     this.selectedPaymentID = 0;
-    this.Payment = new Payment(); // Reset paymentForm data
+    this.Payment = new Payment();
   }
 }

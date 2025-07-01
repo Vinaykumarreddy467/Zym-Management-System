@@ -4,136 +4,166 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-	
+import jakarta.persistence.Table;
+import org.hibernate.annotations.OnDelete; // Keeping OnDelete for database cascade behavior
+import org.hibernate.annotations.OnDeleteAction; // Keeping OnDeleteAction
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
+@Table(name = "user")
 public class User {
-		
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId; 
-    private String username; 
-    private String password; 
-    private String completeName; 
-    private String role; 
-    private String contact; 
-    private String address; 
-    private String email; 
-		  
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<MembershipType> memberTypeList; 
+    private Integer userId;
+    private String username;
+    private String password;
+    private String completeName;
+    private String role;
+    private String contact;
+    private String address;
+    private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Member> memberList; 
+    @ManyToOne()//fetch = FetchType.LAZY)
+    @JoinColumn(name = "type_id", referencedColumnName = "typeId")
+    @OnDelete(action = OnDeleteAction.SET_NULL) 
+    private MembershipType membershipType;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Instructor> instructorList; 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Member> member;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Payment> paymentList; 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Instructor> instructor;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<PromotionalMaterial> promotionalMaterialList; 
-	 
-	
-    public List<MembershipType> getMemberTypeList() {
-        return memberTypeList; 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Payment> payment;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<PromotionalMaterial> promotionalMaterial;
+
+    // Getters and Setters
+    public Integer getUserId() {
+        return userId;
     }
-    public void setMemberTypeList(List<MembershipType> memberTypeList) {
-        this.memberTypeList = memberTypeList; 
-    }
+
     public void setUserId(Integer userId) {
-        this.userId = userId; 
+        this.userId = userId;
     }
-    public String getEmail() {
-        return email; 
-    }
-    public void setEmail(String email) {
-        this.email = email; 
-    }
-    public String getRole() {
-        return role; 
-    }
-    public void setRole(String role) {
-        this.role = role; 
-    }
-	 
-    public int getUserId() {
-        return userId; 
-    }
-    public void setUserId(int userId) {
-        this.userId = userId; 
-    }
+
     public String getUsername() {
-        return username; 
+        return username;
     }
+
     public void setUsername(String username) {
-        this.username = username; 
+        this.username = username;
     }
+
     public String getPassword() {
-        return password; 
+        return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getCompleteName() {
-        return completeName; 
+        return completeName;
     }
+
     public void setCompleteName(String completeName) {
-        this.completeName = completeName; 
+        this.completeName = completeName;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getContact() {
-        return contact; 
+        return contact;
     }
+
     public void setContact(String contact) {
-        this.contact = contact; 
+        this.contact = contact;
     }
+
     public String getAddress() {
-        return address; 
+        return address;
     }
+
     public void setAddress(String address) {
-        this.address = address; 
+        this.address = address;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public MembershipType getMembershipType() {
+        return membershipType;
+    }
+
+    public void setMembershipType(MembershipType membershipType) {
+        this.membershipType = membershipType;
+    }
+
     
-    public List<Member> getMemberList() {
-        return memberList;
-    }
+    public List<Member> getMember() {
+		return member;
+	}
 
-    public void setMemberList(List<Member> memberList) {
-        this.memberList = memberList;
-    }
+	public void setMember(List<Member> member) {
+		this.member = member;
+	}
 
-    public List<Instructor> getInstructorList() {
-        return instructorList;
-    }
+	public List<Instructor> getInstructor() {
+		return instructor;
+	}
 
-    public void setInstructorList(List<Instructor> instructorList) {
-        this.instructorList = instructorList;
-    }
+	public void setInstructor(List<Instructor> instructor) {
+		this.instructor = instructor;
+	}
 
-    public List<Payment> getPaymentList() {
-        return paymentList;
-    }
+	public List<Payment> getPayment() {
+		return payment;
+	}
 
-    public void setPaymentList(List<Payment> paymentList) {
-        this.paymentList = paymentList;
-    }
+	public void setPayment(List<Payment> payment) {
+		this.payment = payment;
+	}
 
-    public List<PromotionalMaterial> getPromotionalMaterialList() {
-        return promotionalMaterialList;
-    }
+	public List<PromotionalMaterial> getPromotionalMaterial() {
+		return promotionalMaterial;
+	}
 
-    public void setPromotionalMaterialList(List<PromotionalMaterial> promotionalMaterialList) {
-        this.promotionalMaterialList = promotionalMaterialList;
-    }
-    
-    @Override
+	public void setPromotionalMaterial(List<PromotionalMaterial> promotionalMaterial) {
+		this.promotionalMaterial = promotionalMaterial;
+	}
+
+	@Override
     public String toString() {
+        // Exclude related lists from toString to prevent potential StackOverflowError
         return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", completeName="
                 + completeName + ", role=" + role + ", contact=" + contact + ", address=" + address + ", email="
-                + email + "]"; //
+                + email + "]";
     }
 }

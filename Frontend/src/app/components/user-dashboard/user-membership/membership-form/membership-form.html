@@ -1,0 +1,90 @@
+<app-usernav></app-usernav>
+<div class="container py-5 bg-light min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="card shadow-lg rounded-4 p-4 p-md-5 w-100" style="max-width: 800px;">
+    <h2 class="display-5 fw-bolder text-dark mb-4 text-center">
+      Add New Member
+    </h2>
+    <p class="text-muted text-center mb-5">Fill out the form below to register a new member.</p>
+
+    <!-- Display Section for Selected Membership and Zym Details -->
+    <div class="card bg-info-subtle border-info rounded-3 p-3 mb-5">
+      <h4 class="card-title text-info fw-bold mb-3">Selected Plan Details</h4>
+      <div class="row g-2">
+        <div class="col-md-6">
+          <p class="mb-1">
+            <span class="fw-semibold">Membership Name: </span>
+            <span class="text-dark">{{ membership.memberShipname }}</span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-1">
+            <span class="fw-semibold">Membership Fee: </span>
+            <span class="text-dark">₹ {{ membership.memberShipFee }}</span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-1">
+            <span class="fw-semibold">Membership Period: </span>
+            <span class="text-dark">{{ membership.membershipPeriod }}</span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-1">
+            <span class="fw-semibold">Zym Name: </span>
+            <span class="text-dark">{{ membership.zym.zymName }}</span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <p class="mb-1">
+            <span class="fw-semibold">Zym Address: </span>
+            <span class="text-dark">{{ membership.zym.zymAddress }}</span>
+          </p>
+        </div>
+    </div>
+
+    <form #membershipformForm="ngForm" class="row g-3">
+        <!-- Govt ID Number -->
+        <div class="col-md-6">
+          <label for="govtIdNumber" class="form-label fw-semibold">Government ID Number <span class="text-danger">*</span></label>
+          <input type="text" class="form-control rounded-pill px-4 py-2" id="govtIdNumber" name="govtIdNumber"
+                 [(ngModel)]="membershipform.GovtIdNumber" required #govtIdNumber="ngModel">
+          <div *ngIf="govtIdNumber.invalid && (govtIdNumber.dirty || govtIdNumber.touched)" class="text-danger small mt-1">
+            Government ID Number is required.
+          </div>
+        </div>
+
+        <!-- Joining Date -->
+        <div class="col-md-6">
+          <label for="joiningDate" class="form-label fw-semibold">Joining Date <span class="text-danger">*</span></label>
+          <input type="date" class="form-control rounded-pill px-4 py-2" id="joiningDate" name="joiningDate"
+                 [(ngModel)]="membershipform.joiningDate" required readonly #joiningDate="ngModel">
+          <div *ngIf="joiningDate.invalid && (joiningDate.dirty || joiningDate.touched)" class="text-danger small mt-1">
+            Joining Date is required.
+          </div>
+        </div>
+
+        <!-- End Of Membership Date -->
+        <div class="col-md-6">
+          <label for="endOfMembershipDate" class="form-label fw-semibold">End Of Membership Date</label>
+          <input type="date" class="form-control rounded-pill px-4 py-2" id="endOfMembershipDate" name="endOfMembershipDate"
+                 [(ngModel)]="membershipform.endOfMembershipDate" readonly>
+          <!-- Note: End Date is auto-filled and read-only -->
+        </div>
+
+        <!-- Payment Message Display -->
+        <div *ngIf="paymentMessage" class="col-12 mt-3">
+          <div class="alert" [ngClass]="{'alert-info': isPaymentProcessing, 'alert-success': paymentMessage.includes('successful') && !isPaymentProcessing, 'alert-danger': paymentMessage.includes('failed') && !isPaymentProcessing, 'alert-warning': paymentMessage.includes('verification failed') && !isPaymentProcessing}">
+            {{ paymentMessage }}
+          </div>
+        </div>
+        
+        <!-- PAY NOW Button -->
+        <div class="col-12 mt-4">
+            <button type="button" class="btn btn-primary btn-lg rounded-pill py-3 fw-bold w-100"
+                    [disabled]="!membershipformForm.valid || isPaymentProcessing"
+                    (click)="onPayNow()">
+              <span *ngIf="!isPaymentProcessing">PAY NOW ₹ {{ membership.memberShipFee }}</span>
+              <span *ngIf="isPaymentProcessing">Processing...</span>
+            </button>
+        </div>
+    </form>

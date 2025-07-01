@@ -1,2 +1,54 @@
 <app-usernav></app-usernav>
 
+
+<div class="container py-4 bg-light min-vh-100">
+  <div class="card shadow-lg rounded-4 p-4 p-md-5">
+    <h2 class="display-4 fw-bolder text-dark mb-5 text-center lh-sm">
+      Explore Our Membership Types
+    </h2>
+
+    <!-- Membership Cards Grid -->
+    <div *ngIf="membershipTypes.length > 0; else noMembershipTypes"
+         class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 g-md-5">
+      <div *ngFor="let membership of membershipTypes" class="col">
+        <div class="card h-100 border border-info rounded-3 shadow-sm hover-scale-105 d-flex flex-column justify-content-between p-4">
+          <div>
+            <h3 class="card-title fs-4 fw-bold text-primary mb-3 text-center">
+              {{ membership.memberShipname }}
+            </h3>
+            
+            <p class="card-text text-dark-emphasis mb-2">
+              <span class="fw-semibold">Fee: </span>
+              <span class="fs-5 text-success fw-bold">₹ {{ membership.memberShipFee  }}</span>
+            </p>
+            <p class="card-text text-dark-emphasis mb-2">
+              <span class="fw-semibold">Period:</span> {{ membership.membershipPeriod }}
+            </p>
+            <p class="card-text text-dark-emphasis mb-2">
+              <span class="fw-semibold">Zym : </span> {{ membership.zym.zymName }}
+            </p>
+            <p class="card-text text-dark-emphasis mb-4">
+              <span class="fw-semibold">Total Amount: </span>
+              <span class="fs-4 text-info fw-bolder">₹ {{ membership.memberShipFee }}</span>
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-top border-light">
+              <button class="btn btn-primary w-100 py-3 rounded-3 fw-semibold hover-shadow-lg" (click)="selectPlan(membership.typeId)">Select Plan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message when no membership types are available -->
+    <ng-template #noMembershipTypes>
+      <div class="text-center py-5 bg-light rounded-3 shadow-sm">
+        <p class="text-dark-emphasis fs-5 fw-semibold mb-2">No membership types are currently available.</p>
+        <p class="text-secondary fs-6">We are working on adding new options. Please check back soon!</p>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-muted mx-auto mt-4" style="width: 4rem; height: 4rem;">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02A9.72 9.72 0 0115 12a9.72 9.72 0 012.758 1.519M11.25 11.25L9.75 3m-.041.02a9.72 9.72 0 00-5.657 9.728 9.72 9.72 0 002.758 1.519M11.25 11.25v7.5m6-6h3m-3 0a9.72 9.72 0 00-2.758-1.519M2.25 12a9.72 9.72 0 015.657-9.728m0 0A9.72 9.72 0 0115 3c2.953 0 5.438 1.125 7.125 3M12 2.25h.008v.008H12V2.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+        </svg>
+      </div>
+    </ng-template>
+
+  </div>
+</div>

@@ -1,40 +1,39 @@
 package com.example.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentId;
 
     private Integer amount;
     private String time;
     private String date;
+    private String razorpayOrderId;
+    private String razorpayPaymentId; 
+    private String status;
 
-    @ManyToOne
+    @ManyToOne()//fetch = FetchType.LAZY)
+    
     @JoinColumn(name = "userId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "memberId")
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    private Member member;
-
-
-    public int getPaymentId() {
+    // Getters and Setters
+    public Integer getPaymentId() {
         return paymentId;
     }
 
-    public void setPaymentId(int paymentId) {
+    public void setPaymentId(Integer paymentId) {
         this.paymentId = paymentId;
     }
 
@@ -62,6 +61,14 @@ public class Payment {
         this.date = date;
     }
 
+    public String getRazorpayOrderId() {
+        return razorpayOrderId;
+    }
+
+    public void setRazorpayOrderId(String razorpayOrderId) {
+        this.razorpayOrderId = razorpayOrderId;
+    }
+
     public User getUser() {
         return user;
     }
@@ -70,17 +77,26 @@ public class Payment {
         this.user = user;
     }
 
-    public Member getMember() {
-        return member;
-    }
+	public String getRazorpayPaymentId() {
+		return razorpayPaymentId;
+	}
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
+	public void setRazorpayPaymentId(String razorpayPaymentId) {
+		this.razorpayPaymentId = razorpayPaymentId;
+	}
 
-    @Override
-    public String toString() {
-        return "Payment [paymentId=" + paymentId + ", amount=" + amount + ", time=" + time + ", date=" + date
-                + ", user=" + user + ", member=" + member + "]";
-    }
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "Payment [paymentId=" + paymentId + ", amount=" + amount + ", time=" + time + ", date=" + date
+				+ ", razorpayOrderId=" + razorpayOrderId + ", razorpayPaymentId=" + razorpayPaymentId + ", status="
+				+ status + ", user=" + user + "]";
+	}
 }

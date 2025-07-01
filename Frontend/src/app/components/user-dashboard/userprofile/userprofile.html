@@ -15,7 +15,7 @@
                 <h4 class="mb-4 text-primary">{{ member.user.completeName }}</h4>
                 <div class="row mb-3">
                     <div class="col-md-6"><strong>Member ID:</strong> {{ member.memberId }}</div>
-                    <div class="col-md-6"><strong>GOVT ID Number :</strong> {{ member.govtidNumber }}</div>
+                    <div class="col-md-6"><strong>GOVT ID Number :</strong> {{ member.GovtIdNumber }}</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6"><strong>Joining Date:</strong> {{ member.joiningDate || 'N/A' }}</div>
@@ -26,16 +26,16 @@
                     <div class="col-md-6"><strong>Email:</strong> {{ member.user.email }}</div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-12"><strong>Address:</strong> {{ member.address || 'N/A' }}</div>
+                    <div class="col-12"><strong>Address:</strong> {{ member.user.address }}</div>
                 </div>
                 <hr>
                 <h5 class="mb-3 text-secondary">Membership Details</h5>
                 <div class="row mb-3">
-                    <div class="col-md-6"><strong>Membership ID (External):</strong> {{ member.membershipId || 'N/A' }}</div>
-                    <div class="col-md-6"><strong>Plan Name:</strong> {{ member.membershipType.name}}</div>
+                    <div class="col-md-6"><strong>Membership ID (External):</strong> {{ member.memberId }}</div>
+                    <div class="col-md-6"><strong>Plan Name:</strong> {{ member.membershipType.memberShipname}}</div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-12"><strong>Associated User:</strong> {{ member.user.username }} (ID: {{ member.user.userId || 'N/A' }})</div>
+                    <div class="col-12"><strong>Associated User:</strong> {{ member.user.completeName }} (ID: {{ member.user.userId || 'N/A' }})</div>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="idNumber" class="form-label">GOVT ID Number</label>
-                            <input type="text" class="form-control" id="idNumber" [(ngModel)]="member.govtidNumber" name="idNumber">
+                            <input type="text" class="form-control" id="idNumber" [(ngModel)]="member.GovtIdNumber" name="idNumber">
                         </div>
                     </div>
                     <div class="row mb-3">

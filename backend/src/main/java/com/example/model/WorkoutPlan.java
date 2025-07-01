@@ -1,45 +1,57 @@
 package com.example.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
 public class WorkoutPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int planId;
+    private Integer planId;
 
     private String workOutname;
     private String workoutDate;
     private String workoutTime;
 
-    @ManyToOne
+    @ManyToOne()//fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Member member;
 
-    @ManyToOne
+    @ManyToOne()//fetch = FetchType.LAZY)
     @JoinColumn(name = "instructorId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Instructor instructor;
 
-    @ManyToOne
+    @ManyToOne()//fetch = FetchType.LAZY)
     @JoinColumn(name = "zymId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Zym zym;
 
-    @OneToMany(mappedBy = "workoutPlan")
+    @OneToMany(mappedBy = "workoutPlan", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Workout> workouts;
 
+    // Getters and Setters
+    public Integer getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(Integer planId) {
+        this.planId = planId;
+    }
 
     public String getWorkOutname() {
         return workOutname;
@@ -47,14 +59,6 @@ public class WorkoutPlan {
 
     public void setWorkOutname(String workOutname) {
         this.workOutname = workOutname;
-    }
-
-    public int getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(int planId) {
-        this.planId = planId;
     }
 
     public String getWorkoutDate() {
@@ -107,7 +111,8 @@ public class WorkoutPlan {
 
     @Override
     public String toString() {
+        // Exclude related entities from toString
         return "WorkoutPlan [planId=" + planId + ", workOutname=" + workOutname + ", workoutDate=" + workoutDate
-                + ", workoutTime=" + workoutTime + ", member=" + member + ", instructor=" + instructor + ", zym=" + zym + "]";
+                + ", workoutTime=" + workoutTime + "]";
     }
 }

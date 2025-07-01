@@ -1,9 +1,9 @@
 package com.example.serviceImpl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;	
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.Exception.ResourceNotFoundException;
 import com.example.model.Member;
 import com.example.repository.MemberRepository;
@@ -14,21 +14,25 @@ import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-
+	private static final Logger logger = LogManager.getLogger(MemberServiceImpl.class);
+	
     @Autowired
     private MemberRepository memberRepository;
 
 	@Override
 	public Member addMember(Member member) {
 		// TODO Auto-generated method stub
-		System.out.println("Saving member: " + member);
-		return memberRepository.save(member);
+		Member member1 = memberRepository.save(member);
+		logger.info("Adding new member: {}", member1);
+		return member1;
 	}
 
 	@Override
 	public List<Member> getAllMembers() {
 		// TODO Auto-generated method stub
-		return memberRepository.findAll();
+		List<Member> memberList = memberRepository.findAll();
+		logger.info("Fetching all members");
+		return memberList;
 	}
 
 	@Override
@@ -37,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
 		Member member = memberRepository.findById(memberId)
 			    .orElseThrow(() -> new ResourceNotFoundException("Member", "id", memberId));
 		System.out.println("Retrieved member: " + member);	
+		logger.info("Fetching member with id: {}", memberId);
 		return member;
 	}
 
@@ -47,11 +52,12 @@ public class MemberServiceImpl implements MemberService {
 	    if (existingMemberOptional.isPresent()) {
 	       Member  existingMember = memberRepository.findById(memberId)
 	        		 .orElseThrow(() -> new ResourceNotFoundException("Member", "id", memberId));
-	       existingMember.setZymname(updatedMember.getZymname());
-	       existingMember.setGovtidNumber(updatedMember.getGovtidNumber());
+	       
+	       existingMember.setGovtIdNumber(updatedMember.getGovtIdNumber());
 	       existingMember.setJoiningDate(updatedMember.getJoiningDate());
 	       existingMember.setEndOfMembershipDate(updatedMember.getEndOfMembershipDate());
-	       existingMember.setAddress(updatedMember.getAddress());
+	       
+	       logger.info("Updating member with id: {}", memberId);
 	       return memberRepository.save(existingMember);
 	    }
 		return updatedMember; 
@@ -63,6 +69,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String deleteMemberyId(Integer memberId) {
 		memberRepository.deleteById(memberId);
+		
+		logger.info("Deleted member with id: {}", memberId);
 		return   "Member deleted Successfullly by memberid" +memberId;
 		
 	}
@@ -70,7 +78,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member getmemberByuserId(Integer userId) {
 		// TODO Auto-generated method stub
-		return memberRepository.findByUserUserId(userId);
+		
+		Member member = memberRepository.findByUserUserId(userId);
+				
+		logger.info("Fetching member by user id: {}", userId);
+		return member;
 	}
 
 	   

@@ -20,10 +20,20 @@ export class Register  implements OnInit {
   }
 
   onSubmit() {
-    this.userService.register(this.user).subscribe(() => {
-      console.log(this.user);
-      alert('Registration successful');
-      this.router.navigate(['/login']);  
-    });
+    
+      this.userService.checkUserName(this.user.username).subscribe((response : any) => {
+        console.log(response);
+        if(response !=true){
+          alert('Username already exists');
+          
+        }else{
+          this.userService.register(this.user).subscribe(() => {
+            console.log(this.user);
+            alert('Registration successful');
+            this.router.navigate(['/login']);  
+          });
+        }
+      })
+    
   }
 }

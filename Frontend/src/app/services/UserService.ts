@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { User } from '../model/user';
 import { environment } from './baseUrl';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,10 @@ export class UserService {
   register(user: any) {
    return this.http.post(`${this.apiUrl}/register`, user);
   }
-
+  checkUserName(username: string) {
+    return this.http.get(`${this.apiUrl}/checkusername/${username}`);
+  }
+  
   login(user: User)  {
     return this.http.post(`${this.apiUrl}/login` , user);
   }

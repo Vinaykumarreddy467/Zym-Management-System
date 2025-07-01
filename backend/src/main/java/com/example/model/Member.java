@@ -1,121 +1,97 @@
 package com.example.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberId;   //
-    private String Zymname;    //
-    private String GovtidNumber; //any ID number   //
-    private String joiningDate;    //
-    private String endOfMembershipDate;   //
-    private String address;   //
-    private String membershipId; //
+    private Integer memberId;
+
+    private String GovtIdNumber;
+    private String joiningDate;
+    private String endOfMembershipDate;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    private User user; //
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "typeId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    private MembershipType membershipType; //
+    private MembershipType membershipType;
 
-    @ManyToOne // New Many-to-One relationship with Zym
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "zymId")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Zym zym;
 
     @OneToMany(mappedBy = "member")
-    private List<Payment> payments; //
+    @JsonIgnore
+    private List<WorkoutPlan> workoutPlans;
 
-    @OneToMany(mappedBy = "member")
-    private List<WorkoutPlan> workoutPlans; //
+    // Getters and Setters
+    public Integer getMemberId() {
+        return memberId;
+    }
 
-	public int getMemberId() {
-		return memberId; //
-	}
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
 
-	public void setMemberId(int memberId) {
-		this.memberId = memberId; //
-	}
-	
-	public String getZymname() {
-		return Zymname;
-	}
+    public String getGovtIdNumber() {
+        return GovtIdNumber;
+    }
 
-	public void setZymname(String zymname) {
-		Zymname = zymname;
-	}
+    public void setGovtIdNumber(String govtIdNumber) {
+        GovtIdNumber = govtIdNumber;
+    }
 
-	public String getGovtidNumber() {
-		return GovtidNumber; //
-	}
+    public String getJoiningDate() {
+        return joiningDate;
+    }
 
-	public void setGovtidNumber(String govtidNumber) {
-		GovtidNumber = govtidNumber; //
-	}
+    public void setJoiningDate(String joiningDate) {
+        this.joiningDate = joiningDate;
+    }
 
-	public String getJoiningDate() {
-		return joiningDate; //
-	}
+    public String getEndOfMembershipDate() {
+        return endOfMembershipDate;
+    }
 
-	public void setJoiningDate(String joiningDate) {
-		this.joiningDate = joiningDate; //
-	}
+    public void setEndOfMembershipDate(String endOfMembershipDate) {
+        this.endOfMembershipDate = endOfMembershipDate;
+    }
 
-	public String getEndOfMembershipDate() {
-		return endOfMembershipDate; //
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setEndOfMembershipDate(String endOfMembershipDate) {
-		this.endOfMembershipDate = endOfMembershipDate; //
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public String getAddress() {
-		return address; //
-	}
+    public MembershipType getMembershipType() {
+        return membershipType;
+    }
 
-	public void setAddress(String address) {
-		this.address = address; //
-	}
-
-	public String getMembershipId() {
-		return membershipId; //
-	}
-
-	public void setMembershipId(String membershipId) {
-		this.membershipId = membershipId; //
-	}
-
-	public User getUser() {
-		return user; //
-	}
-
-	public void setUser(User user) {
-		this.user = user; //
-	}
-
-	public MembershipType getMembershipType() {
-		return membershipType; //
-	}
-
-	public void setMembershipType(MembershipType membershipType) {
-		this.membershipType = membershipType; //
-	}
+    public void setMembershipType(MembershipType membershipType) {
+        this.membershipType = membershipType;
+    }
 
     public Zym getZym() {
         return zym;
@@ -125,26 +101,18 @@ public class Member {
         this.zym = zym;
     }
 
-    public List<Payment> getPayments() {
-        return payments; //
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments; //
-    }
-
     public List<WorkoutPlan> getWorkoutPlans() {
-        return workoutPlans; //
+        return workoutPlans;
     }
 
     public void setWorkoutPlans(List<WorkoutPlan> workoutPlans) {
-        this.workoutPlans = workoutPlans; //
-
+        this.workoutPlans = workoutPlans;
     }
+
     @Override
-	public String toString() {
-		return "Member [memberId=" + memberId + ", name=" + Zymname + ", GovtidNumber=" + GovtidNumber + ", joiningDate="
-				+ joiningDate + ", endOfMembershipDate=" + endOfMembershipDate + ", address=" + address
-				+ ", membershipId=" + membershipId + ", user=" + user + ", membershipType=" + membershipType + ", zym=" + zym + "]"; //
-	}
+    public String toString() {
+        // Exclude related entities from toString
+        return "Member [memberId=" + memberId + ", GovtIdNumber=" + GovtIdNumber + ", joiningDate=" + joiningDate
+                + ", endOfMembershipDate=" + endOfMembershipDate + "]";
+    }
 }

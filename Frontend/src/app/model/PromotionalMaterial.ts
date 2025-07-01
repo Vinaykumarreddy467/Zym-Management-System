@@ -1,15 +1,16 @@
+// PromotionalMaterial.ts
 import { User } from "./user";
 
 export class PromotionalMaterial {
-  promotionId: number;
-  name: string;
+  promotionId: number ;
+  review: string; 
   fileUpload: string;
   user: User;
 
   constructor() {
-    this.promotionId = 0;
-    this.name = '';
+    this.promotionId = null as any;
+    this.review = ''; 
     this.fileUpload = '';
-    this.user = new User(); 
+    this.user = undefined as any;
   }
 }

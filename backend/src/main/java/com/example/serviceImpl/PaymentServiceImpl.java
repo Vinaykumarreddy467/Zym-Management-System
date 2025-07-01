@@ -1,7 +1,8 @@
 package com.example.serviceImpl;
 
 import java.util.List;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.example.service.PaymentService;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
+	private static final Logger logger = LogManager.getLogger(PaymentServiceImpl.class);
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
@@ -18,7 +20,9 @@ public class PaymentServiceImpl implements PaymentService{
 	@Override
 	public Payment addPayment(Payment payment) {
 		// TODO Auto-generated method stub
-		return paymentRepository.save(payment);
+		Payment paymentObj = paymentRepository.save(payment);
+		logger.info("Adding new payment: {}", payment);
+		return paymentObj;
 	}
 
 	@Override
@@ -26,13 +30,17 @@ public class PaymentServiceImpl implements PaymentService{
 		// TODO Auto-generated method stub
 		Payment payment = paymentRepository.findById(paymentId)
 				.orElseThrow(() -> new RuntimeException("Payment not found with id: " + paymentId));
+		
+		logger.info("Fetching payment with id: {}", paymentId);
 		return payment;
 	}
 
 	@Override
 	public List<Payment> getPaymentHistory() {
 		// TODO Auto-generated method stub
-		return paymentRepository.findAll();
+		List<Payment> paymentHistory = paymentRepository.findAll();
+		logger.info("Fetching all payment history");
+		return paymentHistory;
 	}
 
 	@Override
@@ -44,9 +52,11 @@ public class PaymentServiceImpl implements PaymentService{
 		existingPayment.setTime(payment.getTime());
 		existingPayment.setDate(payment.getDate());
 		existingPayment.setUser(payment.getUser());
-		existingPayment.setMember(payment.getMember());
 		// Add any other fields that need to be updated
-		return paymentRepository.save(existingPayment);
+		
+		 Payment paymentObj = paymentRepository.save(existingPayment);
+		 logger.info("Updating payment with id: {}", paymentId);
+		 return paymentObj;
 	}
 
 	@Override
@@ -56,14 +66,9 @@ public class PaymentServiceImpl implements PaymentService{
 				.orElseThrow(() -> new RuntimeException("Payment not found with id: " + paymentId));
 		paymentRepository.delete(payment);
 		
+		logger.info("Deleted payment with id: {}", paymentId);
+		
 		return "Payment with id " + paymentId + " deleted successfully";
 	}
-
-	/*
-	 * @Override public List<Payment> getPaymentHistoryByMemberId(String memberId) {
-	 * // TODO Auto-generated method stub return
-	 * paymentRepository.findByMemberId(memberId).getPayments(); }
-	 * 
-	 */
 
 }

@@ -12,6 +12,7 @@ public interface UserService {
 	String updateById(Integer id, User user);
 	String deleteById(Integer id);
 	User findByUsernameAndPassword(String username, String password);
+	boolean isUsernameAvailable(String username);
 	//User checkUserCredentials(String username, String password);
 // add user
 //	find user by id

@@ -9,9 +9,10 @@ export class MembershipTypeService {
    private apiUrl = `${environment.apiBaseUrl}/api/membership-types`
   constructor(private http : HttpClient) { }
 
-  addMembershipType(membershipType: any) {
+  addMembershipType( membershipType: any) {
     return this.http.post(`${this.apiUrl}`, membershipType);
   }
+  
   getAllMembershipTypes() {
     return this.http.get(`${this.apiUrl}/getall`);
   }

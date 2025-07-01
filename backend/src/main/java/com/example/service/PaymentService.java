@@ -11,6 +11,10 @@ public interface PaymentService {
 	List<Payment> getPaymentHistory();
 	Payment updatePayment(Integer paymentId ,Payment payment);
 	String deletePayment(Integer paymentId);
+	
+	// Method to verify payment
+	
+	
 	//for a specific member
 	//List<Payment> getPaymentHistoryByMemberId(String memberId);
 	

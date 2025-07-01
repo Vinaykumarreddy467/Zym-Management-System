@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import com.example.service.ZymService;
 @RequestMapping("/api/zym/")
 @CrossOrigin(origins = "http://localhost:4200")
 public class ZymController {
+	private static final Logger logger = LoggerFactory.getLogger(ZymController.class);
 	
 	@Autowired
 	private ZymService zymService;

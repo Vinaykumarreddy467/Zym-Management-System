@@ -6,7 +6,7 @@ import com.example.model.MembershipType;
 
 public interface MembershipTypeService {
 	
-	MembershipType addMembershipType(MembershipType membershipType);
+	MembershipType addMembership(MembershipType membershipType);
 	List<MembershipType> getAllMembershipTypes();	
 	MembershipType getMembershipTypeById(Integer membershipTypeId);
 	MembershipType updateMembershipType(Integer membershipTypeId, MembershipType updatedMembershipType);	

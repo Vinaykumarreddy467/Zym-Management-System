@@ -2,6 +2,8 @@ package com.example.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.MembershipType;
-import com.example.model.User;
 import com.example.service.MembershipTypeService;
 import com.example.service.UserService;
 
 @RestController
 @RequestMapping("/api/membership-types")
 public class MembershipTypeController {
+	private static final Logger logger = LoggerFactory.getLogger(MembershipTypeController.class);
 	
 	@Autowired
 	private MembershipTypeService membershipTypeService;
@@ -29,15 +31,15 @@ public class MembershipTypeController {
 	// Define endpoints for CRUD operations on MembershipType here
 	
 	@PostMapping
-	public ResponseEntity<MembershipType> addMembershipType(@RequestBody MembershipType membershipType) {
-		MembershipType savedMembershipType = membershipTypeService.addMembershipType(membershipType);
+	public ResponseEntity<MembershipType> addMembershipType(@RequestBody  MembershipType membershipType) {
+		MembershipType savedMembershipType = membershipTypeService.addMembership(membershipType);
 		return new ResponseEntity<>(savedMembershipType, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/getall")
-	public ResponseEntity<List<MembershipType>> getAllMembershipTypes() {
+	public List<MembershipType> getAllMembershipTypes() {
 		List<MembershipType> membershipTypes = membershipTypeService.getAllMembershipTypes();
-		return new ResponseEntity<>(membershipTypes, HttpStatus.OK);
+		return membershipTypes;
 	}
 	
 	@GetMapping("/{id}")
@@ -45,18 +47,8 @@ public class MembershipTypeController {
 		MembershipType membershipType = membershipTypeService.getMembershipTypeById(id);
 		return new ResponseEntity<>(membershipType, HttpStatus.OK);
 	}
-	@GetMapping("/getbyuserid/{id}")
-	private ResponseEntity<User>  getMembershipTypeByUserId(@PathVariable Integer id) {
 			
-			MembershipType membershipType = membershipTypeService.getMembershipTypeById(id);
-			User user = userService.findById(membershipType.getUser().getUserId());
-		if(user!=null) {
-			return new ResponseEntity<>(user,HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
+			
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<MembershipType> updateMembershipType(@PathVariable("id") Integer id, @RequestBody MembershipType updatedMembershipType) {

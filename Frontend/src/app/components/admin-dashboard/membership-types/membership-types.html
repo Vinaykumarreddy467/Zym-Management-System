@@ -1,83 +1,128 @@
+
 <app-adminnav></app-adminnav>
 
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="mb-4">Membership Types List</h1>
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4 text-center text-primary fw-bold">Membership Types </h1>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="isShowingList">
+    <div class="col-12 text-end">
+      <button class="btn btn-success btn-lg rounded-pill shadow-sm animate-bounce-on-hover" (click)="addNewMembershipType()">
+        <i class="bi bi-plus-circle me-2"></i> Add New Membership Type
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive" *ngIf="isShowingList">
+    <table class="table table-striped table-bordered table-hover align-middle shadow-sm rounded-3 overflow-hidden">
+      <thead class="table-dark">
+        <tr>
+          <th>Gym Name</th>
+          <th>ID</th>
+          <th>Type Name</th>
+          <th>Membership Fee</th>
+          <th>Period</th>
+          <th>Amount</th>
+          <th colspan="2" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let membershipType of membershipTypes">
+         
+          <td>{{ membershipType.zym.zymName }}</td>
+          <td>{{ membershipType.typeId }}</td>
+          <td>{{ membershipType.memberShipname }}</td>
+          <td>{{ membershipType.memberShipFee | currency:'INR' }}</td>
+          <td>{{ membershipType.membershipPeriod }}</td>
+          <td>{{ membershipType.memberShipFee| currency:'INR' }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary me-2 animate-fade-in-on-hover" (click)="editMembershipType(membershipType.typeId)">
+              <i class="bi bi-pencil-square"></i> Edit
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-danger animate-fade-in-on-hover" (click)="deleteMembershipType(membershipType.typeId)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!membershipTypes || membershipTypes.length === 0">
+          <td colspan="8" class="text-center text-muted py-4">No membership types found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="my-5" *ngIf="isAdding || isEditing">
+
+  <!-- Add New Membership Type Form -->
+  <div *ngIf="isAdding" class="card mt-4 p-4 shadow-lg rounded-4 border-success animate-fade-in">
+    <h2 class="card-title mb-4 text-center text-success fw-bold">Add New Membership Type</h2>
+    <form (ngSubmit)="saveMembershipType()">
+      <div class="row g-3">
+        <div class="col-md-6 mb-3">
+          <label for="zymNameAdd" class="form-label fw-semibold">Gym Name <span class="text-danger">*</span></label>
+          <select class="form-select rounded-pill"  required>
+            <option [ngValue]="null" disabled selected>Select Gym</option>
+            <option *ngFor="let zym of zyms" [value]="zym.zymId">{{ zym.zymName }}</option>
+          </select>
         </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-12 text-end">
-            <button class="btn btn-success" (click)="addNewMembershipType()" *ngIf="isShowing">Add New Membership Type</button>
+        <div class="col-md-6 mb-3">
+          <label for="typeNameAdd" class="form-label fw-semibold">Type Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control rounded-pill" id="typeNameAdd" [(ngModel)]="membershipTypeForm.memberShipname" name="memberShipname" required>
         </div>
-    </div>
+        <div class="col-md-6 mb-3">
+          <label for="membershipFeeAdd" class="form-label fw-semibold">Membership Fee (INR) <span class="text-danger">*</span></label>
+          <input type="number" class="form-control rounded-pill" id="membershipFeeAdd" [(ngModel)]="membershipTypeForm.memberShipFee" name="memberShipFee" required>
+        </div>
+        <div class="col-md-12 mb-3">
+          <label for="membershipPeriodAdd" class="form-label fw-semibold">Period (e.g., 1 Month, 3 Months, 1 Year) <span class="text-danger">*</span></label>
+          <input type="text" class="form-control rounded-pill" id="membershipPeriodAdd" [(ngModel)]="membershipTypeForm.membershipPeriod" name="membershipPeriod" required>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn btn-success btn-lg me-3 rounded-pill shadow animate-pulse-on-hover">Save Membership Type</button>
+        <button type="button" class="btn btn-secondary btn-lg rounded-pill shadow animate-pulse-on-hover" (click)="cancelForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
 
-    <div class="table-responsive" *ngIf="isShowing">
-        <table class="table table-striped table-bordered table-hover align-middle">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Type Name</th>
-                    <th>Membership Fee</th>
-                    <th>Period</th>
-                    <th>Amount</th>
-                    <th colspan="2" class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let membershipType of membershipTypes">
-                    <td>{{ membershipType.typeId }}</td>
-                    <td>{{ membershipType.name }}</td>
-                    <td>{{ membershipType.memberShipFee | currency:'INR' }}</td>
-                    <td>{{ membershipType.membershipPeriod }}</td>
-                    <td>{{ membershipType.membershipAmount | currency:'INR' }}</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary" (click)="editMembershipType(membershipType.typeId)">Edit</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-danger" (click)="deleteMembershipType(membershipType.typeId)">Delete</button>
-                    </td>
-                </tr>
-                <tr *ngIf="!membershipTypes || membershipTypes.length === 0">
-                    <td colspan="8" class="text-center text-muted py-4">No membership types found.</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <hr class="my-5" *ngIf="isAdding || (isEditing && selectedMembershipTypeID)">
-
-    <div *ngIf="isAdding || (isEditing && selectedMembershipTypeID)" class="card mt-4 p-4 shadow-sm">
-        <h2 class="card-title mb-4">
-            {{ isAdding ? 'Add New Membership Type' : 'Edit Membership Type: ' + selectedMembershipTypeID }}
-        </h2>
-        <form (ngSubmit)="saveMembershipType()">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="typeName" class="form-label">Type Name</label>
-                    <input type="text" class="form-control" id="typeName" [(ngModel)]="membershipTypeForm.name" name="name" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="membershipFee" class="form-label">Membership Fee (INR)</label>
-                    <input type="number" class="form-control" id="membershipFee" [(ngModel)]="membershipTypeForm.memberShipFee" name="memberShipFee" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="membershipPeriod" class="form-label">Period (Days/Months/Years)</label>
-                    <input type="text" class="form-control" id="membershipPeriod" [(ngModel)]="membershipTypeForm.membershipPeriod" name="membershipPeriod" required>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="membershipAmount" class="form-label">Membership Amount (INR)</label>
-                    <input type="number" class="form-control" id="membershipAmount" [(ngModel)]="membershipTypeForm.membershipAmount" name="membershipAmount" required>
-                </div>
-            </div>
-
-            <div class="d-flex justify-content-end mt-4">
-                <button type="submit" class="btn btn-success me-2">Save Membership Type</button>
-                <button type="button" class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
-            </div>
-        </form>
-    </div>
+  <!-- Edit Membership Type Form -->
+  <div *ngIf="isEditing" class="card mt-4 p-4 shadow-lg rounded-4 border-info animate-fade-in">
+    <h2 class="card-title mb-4 text-center text-info fw-bold">Edit Membership Type: <span class="text-dark">{{ membershipTypeForm.memberShipname }} (ID: {{ selectedMembershipTypeID }})</span></h2>
+    <form (ngSubmit)="saveMembershipType()">
+      <div class="row g-3">
+        <div class="col-md-6 mb-3">
+          <label for="zymNameEdit" class="form-label fw-semibold">Gym Name <span class="text-danger">*</span></label>
+          <select class="form-select rounded-pill"  required>
+            <option [ngValue]="null" disabled>Select Gym</option>
+            <option *ngFor="let zym of zyms" [value]="zym.zymId">{{ zym.zymName }}</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="typeNameEdit" class="form-label fw-semibold">Type Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control rounded-pill" id="typeNameEdit" [(ngModel)]="membershipTypeForm.memberShipname" name="memberShipname" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="membershipFeeEdit" class="form-label fw-semibold">Membership Fee (INR) <span class="text-danger">*</span></label>
+          <input type="number" class="form-control rounded-pill" id="membershipFeeEdit" [(ngModel)]="membershipTypeForm.memberShipFee" name="membershipFee" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="membershipAmountEdit" class="form-label fw-semibold">Membership Amount (INR) <span class="text-danger">*</span></label>
+          <input type="number" class="form-control rounded-pill" id="membershipAmountEdit" [(ngModel)]="membershipTypeForm.memberShipFee" name="membershipAmount" required>
+        </div>
+        <div class="col-md-12 mb-3">
+          <label for="membershipPeriodEdit" class="form-label fw-semibold">Period (e.g., 1 Month, 3 Months, 1 Year) <span class="text-danger">*</span></label>
+          <input type="text" class="form-control rounded-pill" id="membershipPeriodEdit" [(ngModel)]="membershipTypeForm.membershipPeriod" name="membershipPeriod" required>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn btn-info btn-lg me-3 rounded-pill shadow animate-pulse-on-hover">Update Membership Type</button>
+        <button type="button" class="btn btn-secondary btn-lg rounded-pill shadow animate-pulse-on-hover" (click)="cancelForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,19 +1,23 @@
-import { User } from "./user";
+// MembershipType.ts
+import { Zym } from "./Zym";
+import { Member } from "./Member"; // Added import
 
 export class MembershipType {
   typeId: number;
-  name: string;
+  memberShipname: string | undefined;
   memberShipFee: number;
   membershipPeriod: string;
-  membershipAmount: number;
-  user: User;
+  members: Member[]; 
+  zym : Zym;
+  
 
   constructor() {
-    this.typeId = 0;
-    this.name = '';
+    this.typeId = null as any;
+    this.memberShipname = '';
     this.memberShipFee = 0.0;
     this.membershipPeriod = '';
-    this.membershipAmount = 0.0;
-    this.user = new User(); // Initialize with a new User object
+    this.members = [];
+    this.zym = undefined as any;
+    
   }
 }

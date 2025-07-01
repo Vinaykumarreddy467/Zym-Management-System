@@ -7,9 +7,9 @@ export class Workout {
   workoutPlan: WorkoutPlan;
 
   constructor() {
-    this.workoutId = 0;
+    this.workoutId = null as any;
     this.workoutName = '';
     this.description = '';
-    this.workoutPlan = new WorkoutPlan(); // Initialize with a new WorkoutPlan object
+    this.workoutPlan = undefined as any;
   }
 }

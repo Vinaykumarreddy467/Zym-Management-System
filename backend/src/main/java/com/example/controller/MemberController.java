@@ -1,6 +1,8 @@
 package com.example.controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/members")
 public class MemberController {
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired
     private MemberService memberService;
@@ -39,6 +42,7 @@ public class MemberController {
     public Member getmemberByuserId(@PathVariable Integer userId) {
     	 return memberService.getmemberByuserId(userId);
     }
+    
 	@PutMapping("/{id}")
 	public Member updateMemberById(@PathVariable Integer id, @RequestBody Member member) {
 	    return memberService.updateMember(id, member);

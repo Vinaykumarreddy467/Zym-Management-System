@@ -1,15 +1,18 @@
 package com.example.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -34,14 +37,15 @@ public class Instructor {
     private Zym zym;
 
     @OneToMany(mappedBy = "instructor")
+    @JsonIgnore
     private List<WorkoutPlan> workoutPlans;
 
-
-    public int getInstructorId() {
+    // Getters and Setters
+    public Integer getInstructorId() {
         return instructorId;
     }
 
-    public void setInstructorId(int instructorId) {
+    public void setInstructorId(Integer instructorId) {
         this.instructorId = instructorId;
     }
 
@@ -103,7 +107,8 @@ public class Instructor {
 
     @Override
     public String toString() {
+        // Exclude related entities from toString
         return "Instructor [instructorId=" + instructorId + ", name=" + name + ", email=" + email + ", contact="
-                + contact + ", address=" + address + ", user=" + user + ", zym=" + zym + "]";
+                + contact + ", address=" + address + "]";
     }
 }

@@ -12,4 +12,5 @@ public interface ZymService {
 	List<Zym> getAllZyms();
 	Zym updateZym(Integer zymId,Zym workout);
 	List<Zym> deleteZym(Integer zymId);
+	
 }

@@ -1,0 +1,8 @@
+.hover-scale-105:hover {
+    transform: scale(1.03); /* Slightly reduced scale for Bootstrap feel */
+    transition: transform 0.3s ease-in-out;
+  }
+  .hover-shadow-lg:hover {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    transition: box-shadow 0.3s ease-in-out;
+  }

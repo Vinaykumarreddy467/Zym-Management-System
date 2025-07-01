@@ -2,6 +2,8 @@ package com.example.serviceImpl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,18 +13,21 @@ import com.example.service.WorkoutService;
 
 @Service
 public class WorkoutServiceImpl implements WorkoutService{
+	private static final Logger logger = LogManager.getLogger(WorkoutServiceImpl.class);
 
 	@Autowired
-	private WorkoutRepository workoutRepository; // Assuming you have a WorkoutRepository for database operations
+	private WorkoutRepository workoutRepository; 
 	@Override
 	public Workout addWorkout(Workout workout) {
-		// TODO Auto-generated method stub
-		return workoutRepository.save(workout); // Save the workout to the database
+		
+		logger.info("Adding new workout: {}", workout);
+		return workoutRepository.save(workout); 
 	}
 
 	@Override
 	public Workout getWorkoutById(Integer id) {
-		// TODO Auto-generated method stub
+
+		logger.info("Fetching workout with id: {}", id);
 		return workoutRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Workout not found with id: " + id));
 	}
@@ -30,7 +35,8 @@ public class WorkoutServiceImpl implements WorkoutService{
 	@Override
 	public List<Workout> getAllWorkouts() {
 		// TODO Auto-generated method stub
-		return workoutRepository.findAll(); // Retrieve all workouts from the database
+		logger.info("Fetching all workouts");
+		return workoutRepository.findAll(); 
 	}
 
 	@Override
@@ -40,9 +46,10 @@ public class WorkoutServiceImpl implements WorkoutService{
 				.orElseThrow(() -> new RuntimeException("Workout not found with id: " + workoutId));
 		existingWorkout.setWorkoutName(workout.getWorkoutName());
 		existingWorkout.setDescription(workout.getDescription());
-		existingWorkout.setWorkoutPlan(workout.getWorkoutPlan()); // Assuming Workout has a WorkoutPlan field
+		existingWorkout.setWorkoutPlan(workout.getWorkoutPlan()); 
 		
-		return workoutRepository.save(workout); // Update the workout in the database
+		logger.info("Updating workout with id: {}", workoutId);
+		return workoutRepository.save(workout); 
 	}
 
 	@Override
@@ -52,9 +59,8 @@ public class WorkoutServiceImpl implements WorkoutService{
 				.orElseThrow(() -> new RuntimeException("Workout not found with id: " + id));
 		workoutRepository.delete(workout); 
 		
-		return "Workout deleted successfully with id: " + id; // Delete the workout from the database
-		
-		
+		logger.info("Deleted workout with id: {}", id);
+		return "Workout deleted successfully with id: " + id;		
 	}
 
 }

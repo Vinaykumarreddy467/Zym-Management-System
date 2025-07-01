@@ -1,54 +1,53 @@
-package com.example.model;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+package com.example.model;	
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class MembershipType {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private int typeId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer typeId;
 
     private String memberShipname;
     private Double memberShipFee;
     private String membershipPeriod;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    private User user;
-
-    @OneToMany(mappedBy = "membershipType")
+    @OneToMany(mappedBy = "membershipType") 
+    @JsonIgnore
     private List<Member> members;
 
+    @ManyToOne
+    @JoinColumn(name = "zymId")
+    private Zym zym;
 
-    public int getTypeId() {
+    
+    public Integer getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(int typeId) {
+    public void setTypeId(Integer typeId) {
         this.typeId = typeId;
     }
 
-    
-
     public String getMemberShipname() {
-		return memberShipname;
-	}
+        return memberShipname;
+    }
 
-	public void setMemberShipname(String memberShipname) {
-		this.memberShipname = memberShipname;
-	}
+    public void setMemberShipname(String memberShipname) {
+        this.memberShipname = memberShipname;
+    }
 
-	public Double getMemberShipFee() {
+    public Double getMemberShipFee() {
         return memberShipFee;
     }
 
@@ -64,14 +63,6 @@ public class MembershipType {
         this.membershipPeriod = membershipPeriod;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public List<Member> getMembers() {
         return members;
     }
@@ -80,12 +71,18 @@ public class MembershipType {
         this.members = members;
     }
 
-	@Override
-	public String toString() {
-		return "MembershipType [typeId=" + typeId + ", memberShipname=" + memberShipname + ", memberShipFee="
-				+ memberShipFee + ", membershipPeriod=" + membershipPeriod + ", user=" + user + ", members=" + members
-				+ "]";
-	}
+    public Zym getZym() {
+        return zym;
+    }
 
-    
+    public void setZym(Zym zym) {
+        this.zym = zym;
+    }
+
+    @Override
+    public String toString() {
+        // Exclude related lists from toString
+        return "MembershipType [typeId=" + typeId + ", memberShipname=" + memberShipname + ", memberShipFee="
+                + memberShipFee + ", membershipPeriod=" + membershipPeriod + "]";
+    }
 }

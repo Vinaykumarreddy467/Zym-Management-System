@@ -19,6 +19,7 @@ import { Userprofile } from './components/user-dashboard/userprofile/userprofile
 import { UserMembership } from './components/user-dashboard/user-membership/user-membership';
 import { ZymsAvailable } from './components/admin-dashboard/zyms-available/zyms-available';
 import { UsermembershipTypes } from './components/user-dashboard/user-membership/usermembership-types/usermembership-types';
+import { MembershipForm } from './components/user-dashboard/user-membership/membership-form/membership-form';
 
 const routes: Routes = [
   {path: "", component:Welcome},
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: "mymembership" , component : UserMembership},
   {path: "allusermembershiptypes" , component : UsermembershipTypes},
   {path : "allzyms" , component: ZymsAvailable },
+  {path: "usermembershipplan", component: MembershipForm},
 ];
 
 @NgModule({

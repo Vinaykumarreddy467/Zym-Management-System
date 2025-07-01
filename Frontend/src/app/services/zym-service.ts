@@ -21,6 +21,9 @@ export class ZymService {
   getZymById(zymId: number): any {
   return this.http.get(`${this.apiUrl}/getById/${zymId}`, { responseType: 'json' });
 }
+// getZymByMemberShipId(memberShipId: number): any {
+//   return this.http.get(`${this.apiUrl}/getByMemberShipId/${memberShipId}`);
+// }
   updateZym(zymId: number, zym: Zym) {
     return this.http.put(`${this.apiUrl}/update`, zym);
   }

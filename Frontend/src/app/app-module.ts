@@ -33,6 +33,7 @@ import { Userprofile } from './components/user-dashboard/userprofile/userprofile
 import { UserMembership } from './components/user-dashboard/user-membership/user-membership';
 import { ZymsAvailable } from './components/admin-dashboard/zyms-available/zyms-available';
 import { UsermembershipTypes } from './components/user-dashboard/user-membership/usermembership-types/usermembership-types';
+import { MembershipForm } from './components/user-dashboard/user-membership/membership-form/membership-form';
 
 
 
@@ -65,6 +66,7 @@ import { UsermembershipTypes } from './components/user-dashboard/user-membership
     UserMembership,
     ZymsAvailable,
     UsermembershipTypes,
+    MembershipForm,
   
   ],
   imports: [

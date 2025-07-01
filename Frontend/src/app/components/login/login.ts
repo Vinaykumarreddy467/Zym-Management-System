@@ -20,6 +20,10 @@ export class Login implements OnInit {
   onSubmit() {
     this.userService.login(this.user).subscribe(
       (response : any) => {
+        console.log(response)
+        if(response==null){
+          alert('Login Failed : Invalid Credentials /n Please Enter Valid Credentials /n /n If you are a new user please register first');          
+        }        
          sessionStorage.setItem("LogedinUser",response.userId );
          sessionStorage.setItem("LogedinUsername",response.username );
          sessionStorage.setItem("LogedinRole",response.role );
@@ -33,6 +37,7 @@ export class Login implements OnInit {
             else if(response.role=='user'){
               this.user=response;
               console.log(this.user+" "+response.role);
+              alert(this.user.userId);
               this.router.navigate(['/Userdashboard']);
             }
             else if(response.role=='instructor'){
