@@ -21,7 +21,11 @@ The Zym Management System is built upon a modern and widely adopted technology s
 
 * **Backend:**
     * **Java:** The core programming language for server-side development.
-    * *(Further Java frameworks/libraries like Spring Boot, Hibernate, etc., would typically be listed here if known.)*
+    * **Spring Boot:** Framework used for building the RESTful APIs and managing the backend services.
+    * **Spring Data JPA / Hibernate:** For database interaction and ORM.
+    * **Maven:** Project build automation tool.
+    * **SLF4J & Logback:** For logging.
+    * **Razorpay SDK:** Integrated for payment processing.
 * **Frontend:**
     * **Angular:** A powerful TypeScript-based framework for building dynamic single-page applications.
     * **TypeScript:** A superset of JavaScript that adds static types, enhancing code quality and maintainability.
@@ -36,25 +40,131 @@ The system is designed to offer a comprehensive suite of features essential for 
 
 * **Member Management:**
     * Member registration and profile management.
-    * Attendance tracking.
+    * Attendance tracking (implied by workout plans and schedules).
     * Membership status and history.
 * **Membership Management:**
     * Creation and configuration of various membership plans (e.g., monthly, annual, class-based).
     * Membership activation, renewal, and cancellation.
-    * Automated billing and payment tracking.
 * **Class & Schedule Management:**
-    * Creation and scheduling of fitness classes.
+    * Creation and scheduling of fitness classes (implied by Instructor and Workout Controllers).
     * Trainer assignment and availability management.
-    * Class booking and capacity management.
+* **Workout Management:**
+    * Creation and management of individual workouts.
+    * Creation and management of comprehensive workout plans.
 * **Staff Management:**
-    * Management of gym employees and their roles.
-    * Tracking of staff attendance and payroll.
-* **Reporting & Analytics:**
-    * Dashboards for key performance indicators (KPIs) such as member count, revenue, and class attendance.
-    * Generation of reports on memberships, payments, and operational activities.
-* **Authentication & Authorization:**
-    * Secure user authentication for different roles (e.g., Admin, Staff).
-    * Role-based access control to various functionalities.
+    * Management of gym instructors.
+    * Management of user accounts which can represent staff.
+* **Financial Management:**
+    * Processing and tracking of payments, including Razorpay integration.
+* **Promotional Content Management:**
+    * Adding, retrieving, updating, and deleting promotional materials and reviews.
+* **Zym (Gym) Information Management:**
+    * Management of gym details like name and address.
+* **User Authentication & Authorization:**
+    * Secure user login and registration.
+    * Username availability check during registration.
+    * Email notification upon user registration.
+    * Role-based access control (implied by different user types, though not explicitly detailed in provided code).
+
+---
+
+## Backend Controllers and API Endpoints
+
+The Java backend implements a comprehensive set of RESTful APIs, organized into several controllers, to manage various aspects of the Zym Management System. All endpoints are prefixed with `/api/`.
+
+#### 1. `PaymentController.java`
+* **Base Mapping:** `/api/payments`
+* **Responsibilities:** Handles all payment-related operations, including processing new payments via Razorpay, retrieving payment history, and managing individual payment records.
+* **Key Endpoints:**
+    * `POST /api/payments/{userId}`: Process a new payment for a given user.
+    * `GET /api/payments/{paymentId}`: Verify/retrieve a payment by its ID.
+    * `GET /api/payments/getall`: Retrieve a list of all payment records.
+    * `GET /api/payments/getPaymentById/{paymentId}`: Get a specific payment by ID.
+    * `PUT /api/payments/{paymentId}`: Update an existing payment record.
+    * `DELETE /api/payments/{paymentId}`: Delete a payment record.
+
+#### 2. `ZymController.java`
+* **Base Mapping:** `/api/zym/`
+* **Responsibilities:** Manages gym (Zym) specific information, such as adding new gym details and retrieving existing ones.
+* **Key Endpoints:**
+    * `POST /api/zym/add`: Add a new Zym (gym) entry.
+    * `GET /api/zym/getAll`: Retrieve a list of all Zyms.
+    * `GET /api/zym/getById/{zymId}`: Get a specific Zym by its ID.
+    * `POST /api/zym/update/{zymId}`: Update details of an existing Zym.
+    * `DELETE /api/zym/delete/{zymId}`: Delete a Zym entry.
+
+#### 3. `InstructorController.java`
+* **Base Mapping:** `/api/instructors`
+* **Responsibilities:** Handles the management of instructors, including adding, retrieving, updating, and deleting instructor records.
+* **Key Endpoints:**
+    * `POST /api/instructors`: Add a new instructor.
+    * `GET /api/instructors/getall`: Retrieve all instructors.
+    * `GET /api/instructors/{id}`: Get an instructor by ID.
+    * `PUT /api/instructors/{id}`: Update an instructor's details.
+    * `DELETE /api/instructors/{id}`: Delete an instructor.
+
+#### 4. `MembershipTypeController.java`
+* **Base Mapping:** `/api/membership-types`
+* **Responsibilities:** Manages different types of memberships offered by the gym.
+* **Key Endpoints:**
+    * `POST /api/membership-types`: Add a new membership type.
+    * `GET /api/membership-types/getall`: Retrieve all membership types.
+    * `GET /api/membership-types/{id}`: Get a membership type by ID.
+    * `PUT /api/membership-types/{id}`: Update a membership type.
+    * `DELETE /api/membership-types/{id}`: Delete a membership type.
+
+#### 5. `WorkoutController.java`
+* **Base Mapping:** `/api/workOuts`
+* **Responsibilities:** Manages individual workout details.
+* **Key Endpoints:**
+    * `POST /api/workOuts`: Add a new workout.
+    * `GET /api/workOuts/getall`: Retrieve all workouts.
+    * `GET /api/workOuts/getbyid`: Get a workout by ID (note: uses `@RequestBody` for ID).
+    * `PUT /api/workOuts/{id}`: Update an existing workout.
+    * `DELETE /api/workOuts/{id}`: Delete a workout.
+
+#### 6. `WorkoutPlanController.java`
+* **Base Mapping:** `/api/workoutPlans`
+* **Responsibilities:** Handles the management of workout plans, which likely group individual workouts or define a regimen.
+* **Key Endpoints:**
+    * `POST /api/workoutPlans`: Add a new workout plan.
+    * `GET /api/workoutPlans/getall`: Retrieve all workout plans.
+    * `GET /api/workoutPlans/getbyid`: Get a workout plan by ID (note: uses `@RequestBody` for ID).
+    * `POST /api/workoutPlans/{id}`: Update an existing workout plan.
+    * `DELETE /api/workoutPlans/{id}`: Delete a workout plan.
+
+#### 7. `MemberController.java`
+* **Base Mapping:** `/api/members`
+* **Responsibilities:** Manages gym members' profiles and related operations.
+* **Key Endpoints:**
+    * `POST /api/members`: Add a new member.
+    * `GET /api/members/getall`: Retrieve all members.
+    * `GET /api/members/{id}`: Get a member by ID.
+    * `GET /api/members/getByUserId/{userId}`: Get a member by associated user ID.
+    * `PUT /api/members/{id}`: Update a member's details.
+    * `DELETE /api/members/{id}`: Delete a member.
+
+#### 8. `PromotionalMaterialController.java`
+* **Base Mapping:** `/api/promotional-materials`
+* **Responsibilities:** Manages promotional content and materials for the gym.
+* **Key Endpoints:**
+    * `POST /api/promotional-materials`: Add new promotional material.
+    * `GET /api/promotional-materials/getall`: Retrieve all promotional materials.
+    * `GET /api/promotional-materials/getbyid/{promotionId}`: Get promotional material by ID.
+    * `PUT /api/promotional-materials/updatebyid/{id}`: Update existing promotional material.
+    * `DELETE /api/promotional-materials/{id}`: Delete promotional material.
+
+#### 9. `UserController.java`
+* **Base Mapping:** `/api/user`
+* **Responsibilities:** Handles user authentication (login), registration, user management, and email notifications.
+* **Key Endpoints:**
+    * `POST /api/user/login`: Authenticates a user.
+    * `POST /api/user/register`: Registers a new user and sends a welcome email.
+    * `GET /api/user/checkusername/{username}`: Checks if a username is available.
+    * `GET /api/user/getall`: Retrieve all users.
+    * `GET /api/user/{id}`: Get a user by ID.
+    * `PUT /api/user/{id}`: Update a user's details.
+    * `DELETE /api/user/{id}`: Delete a user.
 
 ---
 
@@ -74,7 +184,7 @@ Ensure you have the following software installed on your system:
     ```
 * **Git:** For cloning the repository.
 * **Database System:** A relational database (e.g., MySQL, PostgreSQL, H2 for development).
-* **Maven/Gradle:** (If applicable for Java backend project management, usually included with IDEs).
+* **Maven:** (Assuming Maven as the build tool based on common Spring Boot practices).
 
 ### Installation
 
@@ -98,9 +208,9 @@ Ensure you have the following software installed on your system:
         spring.datasource.password=your_db_password
         spring.jpa.hibernate.ddl-auto=update # Or create for first run
         ```
-    * **Build and Run:** Use your preferred build tool (Maven or Gradle) to build and run the application.
+    * **Razorpay Configuration (if applicable):** If you are running payment features, ensure your Razorpay API Key ID and Key Secret are configured in your `PaymentController.java` or `application.properties`. As per the provided `PaymentController.java`, they are hardcoded, but for production, these should be externalized.
+    * **Build and Run:** Use Maven to build and run the application.
         ```bash
-        # If using Maven:
         mvn clean install
         mvn spring-boot:run
         ```
@@ -123,33 +233,21 @@ Ensure you have the following software installed on your system:
 
 ---
 
-## API Endpoints (Conceptual)
-
-The backend exposes a set of RESTful APIs to manage various entities. Typical endpoints might include:
-
-* `/api/members`
-* `/api/memberships`
-* `/api/classes`
-* `/api/staff`
-* `/api/payments`
-* `/api/auth` (for authentication)
-
-*(Detailed API documentation, e.g., using Swagger/OpenAPI, would be linked or described here.)*
-
----
-
 ## Database Schema (Conceptual)
 
-The database schema would typically include tables for:
+The database schema would typically include tables corresponding to your models:
 
-* `Members` (id, name, contact, membership_id, etc.)
-* `Memberships` (id, type, duration, price, etc.)
-* `Classes` (id, name, description, schedule, trainer_id, capacity, etc.)
-* `Staff` (id, name, role, contact, etc.)
-* `Payments` (id, member_id, amount, date, status, etc.)
-* `Users` (for authentication, linked to staff/members)
+* `Users` (id, username, password, email, complete_name, etc.)
+* `Members` (id, user_id, contact_info, etc. - linking to Users)
+* `Instructors` (id, name, contact_info, specialization, etc.)
+* `MembershipTypes` (id, name, duration, price, description, etc.)
+* `Payments` (id, user_id, amount, date, status, razorpay_order_id, etc.)
+* `Workouts` (id, name, description, duration, etc.)
+* `WorkoutPlans` (id, workout_name, workout_date, workout_time, member_id, etc.)
+* `Zyms` (id, zym_name, zym_address, etc.)
+* `PromotionalMaterials` (id, review, file_upload, user_id, etc.)
 
-*(An ERD or detailed schema description would be beneficial here.)*
+*(An Entity-Relationship Diagram (ERD) or more detailed schema descriptions could be added here for a comprehensive understanding.)*
 
 ---
 
@@ -157,12 +255,14 @@ The database schema would typically include tables for:
 
 Potential future enhancements for the Zym Management System include:
 
-* Integration with payment gateways for online transactions.
-* Mobile application support.
-* Advanced reporting and analytics features.
+* Further integration with payment gateways and recurring billing.
+* Mobile application support for members and instructors.
+* Advanced reporting and analytics dashboards.
 * Trainer-specific portals for managing their classes and members.
-* Push notifications for class reminders or membership renewals.
-* Integration with access control systems (e.g., turnstiles).
+* Automated push notifications for class reminders or membership renewals.
+* Integration with physical access control systems (e.g., turnstiles).
+* Enhanced error handling and logging.
+* Implementation of Spring Security for robust authentication and authorization.
 
 ---
 
@@ -182,7 +282,7 @@ Please ensure your code adheres to the project's coding standards and includes a
 
 ## License
 
-*(As the license information was not available, please choose and state the license under which this project is distributed. For example, MIT, Apache 2.0, GPLv3, etc.)*
+*(As the license information was not available, please choose and state the license under which this project is distributed. For example, MIT, Apache 2.0, GPLv3, etc. A common choice for open-source projects is the MIT License.)*
 
 ---
 
