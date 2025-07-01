@@ -311,3 +311,5 @@ SOFTWARE.
 For any inquiries or feedback, please reach out to the repository owner:
 
 * **Vinaykumarreddy467:** [https://github.com/Vinaykumarreddy467](https://github.com/Vinaykumarreddy467)
+* **Email:** vinaykumarreddy467@gmail.com
+  
