@@ -27,7 +27,9 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>21</java.version>	
+		<sonar.organization>fitdeck</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -91,7 +93,6 @@
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-slf4j2-impl</artifactId>
 		</dependency>
-
 			<!-- needed for Implements logging logic -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
